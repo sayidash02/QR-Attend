@@ -15,11 +15,68 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        /*
+        |--------------------------------------------------------------------------
+        | ADMIN
+        |--------------------------------------------------------------------------
+        */
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        User::create([
+
+            'name' => 'Admin',
+
+            'email' => 'admin@gmail.com',
+
+            'password' => bcrypt('password'),
+
+            'role' => 'admin',
+
+        ]);
+
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | DOSEN
+        |--------------------------------------------------------------------------
+        */
+
+        User::create([
+
+            'name' => 'Pak Fatan',
+
+            'nidn' => '12345678',
+
+            'matkul' => 'Pemrograman Web',
+
+            'email' => 'dosen@gmail.com',
+
+            'password' => bcrypt('password'),
+
+            'role' => 'dosen',
+
+        ]);
+
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | MAHASISWA
+        |--------------------------------------------------------------------------
+        */
+
+        User::create([
+
+            'name' => 'Wildan',
+
+            'nim' => '231110027',
+
+            'email' => 'mahasiswa@gmail.com',
+
+            'password' => bcrypt('password'),
+
+            'role' => 'mahasiswa',
+
         ]);
     }
 }

@@ -2,6 +2,8 @@ import '../css/app.css'
 
 import { createInertiaApp } from '@inertiajs/svelte'
 
+import { mount } from 'svelte'
+
 createInertiaApp({
 
     resolve: async (name) => {
@@ -14,7 +16,7 @@ createInertiaApp({
 
     setup({ el, App, props }) {
 
-        new App({
+        mount(App, {
 
             target: el,
 

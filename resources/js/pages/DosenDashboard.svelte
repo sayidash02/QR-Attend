@@ -10,7 +10,9 @@
 
             headers: {
 
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'X-CSRF-TOKEN': document
+                    .querySelector('meta[name="csrf-token"]')
+                    .content,
 
                 'Content-Type': 'application/json',
 
@@ -40,20 +42,11 @@
         <nav class="space-y-3 flex-1">
 
             <a
-                href="/dashboard"
+                href="/dosen/dashboard"
                 class="flex items-center gap-3 bg-slate-100 text-[#062B66] px-5 py-4 rounded-xl font-semibold"
             >
                 📊 Dashboard
             </a>
-
-            <a
-                href="/akun"
-                class="flex items-center gap-3 text-slate-600 hover:bg-slate-100 px-5 py-4 rounded-xl"
-            >
-                👤 Akun
-            </a>
-            
-           {#if user.role === 'dosen'}
 
             <a
                 href="/mahasiswa"
@@ -62,17 +55,15 @@
                 👨‍🎓 Data Mahasiswa
             </a>
 
-        {/if}
-
             <a
-                href="/dashboard"
+                href="/presensi"
                 class="flex items-center gap-3 text-slate-600 hover:bg-slate-100 px-5 py-4 rounded-xl"
             >
                 📷 Sesi Presensi
             </a>
 
             <a
-                href="/dashboard"
+                href="/rekap"
                 class="flex items-center gap-3 text-slate-600 hover:bg-slate-100 px-5 py-4 rounded-xl"
             >
                 📄 Rekap Kehadiran
@@ -91,11 +82,11 @@
             <div>
 
                 <h1 class="text-6xl font-bold text-[#062B66] mb-2">
-                    Dashboard
+                    Dashboard Dosen
                 </h1>
 
                 <p class="text-slate-500 text-xl">
-                    Ringkasan aktivitas dan kehadiran mahasiswa hari ini.
+                    Kelola presensi mahasiswa dan sesi QR.
                 </p>
 
             </div>
@@ -125,7 +116,7 @@
 
         </div>
 
-        <!-- HERO CARD -->
+        <!-- HERO -->
         <div class="bg-white rounded-3xl shadow-sm p-10 mb-10 flex items-center justify-between border border-slate-200">
 
             <div class="max-w-2xl">
@@ -139,9 +130,8 @@
                 </h2>
 
                 <p class="text-slate-500 text-xl leading-relaxed">
-                    Silakan minta mahasiswa memindai QR Code di bawah ini
-                    untuk mencatat kehadiran. Sesi akan otomatis
-                    berakhir dalam 10 menit.
+                    Dosen dapat membuat QR Code untuk
+                    presensi mahasiswa secara realtime.
                 </p>
 
             </div>
@@ -153,7 +143,7 @@
         </div>
 
         <!-- STATS -->
-        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
             <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
 
@@ -162,7 +152,7 @@
                 </div>
 
                 <h1 class="text-5xl font-bold text-[#062B66] mb-3">
-                    1,240
+                    120
                 </h1>
 
                 <p class="text-slate-500 text-lg">
@@ -174,23 +164,7 @@
             <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
 
                 <div class="text-5xl mb-5">
-                    ✅
-                </div>
-
-                <h1 class="text-5xl font-bold text-[#062B66] mb-3">
-                    856
-                </h1>
-
-                <p class="text-slate-500 text-lg">
-                    Hadir Hari Ini
-                </p>
-
-            </div>
-
-            <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
-
-                <div class="text-5xl mb-5">
-                    ⏰
+                    📷
                 </div>
 
                 <h1 class="text-5xl font-bold text-[#062B66] mb-3">
@@ -206,15 +180,15 @@
             <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
 
                 <div class="text-5xl mb-5">
-                    📈
+                    ✅
                 </div>
 
                 <h1 class="text-5xl font-bold text-[#062B66] mb-3">
-                    92%
+                    95%
                 </h1>
 
                 <p class="text-slate-500 text-lg">
-                    Rata-rata Kehadiran
+                    Kehadiran
                 </p>
 
             </div>
