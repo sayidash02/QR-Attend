@@ -20,7 +20,7 @@ class User extends Authenticatable
 
         'nim',
         'nidn',
--n        'name',
+        'name',
         'email',
         'password',
         'role',
