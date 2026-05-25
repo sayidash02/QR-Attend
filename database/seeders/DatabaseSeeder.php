@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\MataKuliah;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -21,17 +22,14 @@ class DatabaseSeeder extends Seeder
         |--------------------------------------------------------------------------
         */
 
-        User::create([
-
-            'name' => 'Admin',
-
-            'email' => 'admin@gmail.com',
-
-            'password' => bcrypt('password'),
-
-            'role' => 'admin',
-
-        ]);
+        User::updateOrCreate(
+            ['email' => 'admin@gmail.com'],
+            [
+                'name' => 'Admin',
+                'password' => bcrypt('password'),
+                'role' => 'admin',
+            ]
+        );
 
 
 
@@ -41,21 +39,16 @@ class DatabaseSeeder extends Seeder
         |--------------------------------------------------------------------------
         */
 
-        User::create([
-
-            'name' => 'Pak Fatan',
-
-            'nidn' => '12345678',
-
-            'matkul' => 'Pemrograman Web',
-
-            'email' => 'dosen@gmail.com',
-
-            'password' => bcrypt('password'),
-
-            'role' => 'dosen',
-
-        ]);
+        $dosen = User::updateOrCreate(
+            ['email' => 'dosen@gmail.com'],
+            [
+                'name' => 'Pak Fatan',
+                'nidn' => '12345678',
+                'matkul' => 'Pemrograman Web',
+                'password' => bcrypt('password'),
+                'role' => 'dosen',
+            ]
+        );
 
 
 
@@ -65,18 +58,64 @@ class DatabaseSeeder extends Seeder
         |--------------------------------------------------------------------------
         */
 
-        User::create([
+        User::updateOrCreate(
+            ['email' => 'mahasiswa@gmail.com'],
+            [
+                'name' => 'Wildan',
+                'nim' => '231110027',
+                'password' => bcrypt('password'),
+                'role' => 'mahasiswa',
+            ]
+        );
 
-            'name' => 'Wildan',
+        User::updateOrCreate(
+            ['email' => 'mahasiswa2@gmail.com'],
+            [
+                'name' => 'Nasrul Fawzi',
+                'nim' => '231110028',
+                'password' => bcrypt('password'),
+                'role' => 'mahasiswa',
+            ]
+        );
 
-            'nim' => '231110027',
+        User::updateOrCreate(
+            ['email' => 'mahasiswa3@gmail.com'],
+            [
+                'name' => 'Fikri Karunia',
+                'nim' => '231110029',
+                'password' => bcrypt('password'),
+                'role' => 'mahasiswa',
+            ]
+        );
 
-            'email' => 'mahasiswa@gmail.com',
+        User::updateOrCreate(
+            ['email' => 'mahasiswa4@gmail.com'],
+            [
+                'name' => 'Sayyid Ashhabussnan',
+                'nim' => '231110030',
+                'password' => bcrypt('password'),
+                'role' => 'mahasiswa',
+            ]
+        );
 
-            'password' => bcrypt('password'),
 
-            'role' => 'mahasiswa',
 
-        ]);
+        /*
+        |--------------------------------------------------------------------------
+        | MATA KULIAH
+        |--------------------------------------------------------------------------
+        */
+
+        MataKuliah::updateOrCreate(
+            ['nama_matkul' => 'Pemrograman Web', 'dosen_id' => $dosen->id],
+        );
+
+        MataKuliah::updateOrCreate(
+            ['nama_matkul' => 'Basis Data', 'dosen_id' => $dosen->id],
+        );
+
+        MataKuliah::updateOrCreate(
+            ['nama_matkul' => 'Struktur Data', 'dosen_id' => $dosen->id],
+        );
     }
 }
