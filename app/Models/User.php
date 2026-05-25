@@ -57,4 +57,9 @@ class User extends Authenticatable
 
         ];
     }
+
+    public function kehadirans()
+    {
+        return $this->hasMany(Kehadiran::class);
+    }
 }
