@@ -21,17 +21,14 @@ class DatabaseSeeder extends Seeder
         |--------------------------------------------------------------------------
         */
 
-        User::create([
-
-            'name' => 'Admin',
-
-            'email' => 'admin@gmail.com',
-
-            'password' => bcrypt('password'),
-
-            'role' => 'admin',
-
-        ]);
+        User::updateOrCreate(
+            ['email' => 'admin@gmail.com'],
+            [
+                'name' => 'Admin',
+                'password' => bcrypt('password'),
+                'role' => 'admin',
+            ]
+        );
 
 
 
@@ -41,21 +38,16 @@ class DatabaseSeeder extends Seeder
         |--------------------------------------------------------------------------
         */
 
-        User::create([
-
-            'name' => 'Pak Fatan',
-
-            'nidn' => '12345678',
-
-            'matkul' => 'Pemrograman Web',
-
-            'email' => 'dosen@gmail.com',
-
-            'password' => bcrypt('password'),
-
-            'role' => 'dosen',
-
-        ]);
+        User::updateOrCreate(
+            ['email' => 'dosen@gmail.com'],
+            [
+                'name' => 'Pak Fatan',
+                'nidn' => '12345678',
+                'matkul' => 'Pemrograman Web',
+                'password' => bcrypt('password'),
+                'role' => 'dosen',
+            ]
+        );
 
 
 
@@ -65,18 +57,14 @@ class DatabaseSeeder extends Seeder
         |--------------------------------------------------------------------------
         */
 
-        User::create([
-
-            'name' => 'Wildan',
-
-            'nim' => '231110027',
-
-            'email' => 'mahasiswa@gmail.com',
-
-            'password' => bcrypt('password'),
-
-            'role' => 'mahasiswa',
-
-        ]);
+        User::updateOrCreate(
+            ['email' => 'mahasiswa@gmail.com'],
+            [
+                'name' => 'Wildan',
+                'nim' => '231110027',
+                'password' => bcrypt('password'),
+                'role' => 'mahasiswa',
+            ]
+        );
     }
 }
