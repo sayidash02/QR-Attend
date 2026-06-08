@@ -1,5 +1,7 @@
 <script>
 
+    import { toast } from '../stores/toastStore.js'
+
     export let user
 
     let oldPassword = ''
@@ -7,8 +9,6 @@
     let confirmPassword = ''
 
     let loading = false
-    let message = ''
-    let errorMessage = ''
 
     /*
     |--------------------------------------------------------------------------
@@ -20,28 +20,26 @@
 
         if (!oldPassword || !newPassword || !confirmPassword) {
 
-            errorMessage = 'Semua field harus diisi!'
+            toast.warning('Semua field harus diisi!')
             return
 
         }
 
         if (newPassword !== confirmPassword) {
 
-            errorMessage = 'Password baru tidak cocok!'
+            toast.error('Password baru tidak cocok!')
             return
 
         }
 
         if (newPassword.length < 6) {
 
-            errorMessage = 'Password minimal 6 karakter!'
+            toast.warning('Password minimal 6 karakter!')
             return
 
         }
 
         loading = true
-        message = ''
-        errorMessage = ''
 
         try {
 
@@ -72,27 +70,21 @@
 
             if (response.ok) {
 
-                message = data.message
+                toast.success(data.message || 'Password berhasil diubah! 🔒')
 
                 oldPassword = ''
                 newPassword = ''
                 confirmPassword = ''
 
-                setTimeout(() => {
-
-                    message = ''
-
-                }, 3000)
-
             } else {
 
-                errorMessage = data.message
+                toast.error(data.message || 'Gagal mengubah password')
 
             }
 
         } catch (error) {
 
-            errorMessage = 'Terjadi kesalahan saat mengubah password'
+            toast.error('Terjadi kesalahan saat mengubah password')
 
         } finally {
 
@@ -303,28 +295,6 @@
                     <h3 class="text-2xl font-bold text-[#062B66] mb-6">
                         Ubah Password
                     </h3>
-
-                    <!-- SUCCESS -->
-                    {#if message}
-
-                        <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-xl text-green-700 font-semibold">
-
-                            ✅ {message}
-
-                        </div>
-
-                    {/if}
-
-                    <!-- ERROR -->
-                    {#if errorMessage}
-
-                        <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 font-semibold">
-
-                            ❌ {errorMessage}
-
-                        </div>
-
-                    {/if}
 
                     <div class="space-y-5">
 

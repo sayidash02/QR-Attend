@@ -1,6 +1,7 @@
 <script>
     import { Html5Qrcode } from 'html5-qrcode'
     import { onDestroy } from 'svelte'
+    import { toast } from '../../stores/toastStore.js'
 
     export let user
 
@@ -43,6 +44,7 @@
         } catch (err) {
 
             scanError = 'Tidak dapat mengakses kamera.'
+            toast.error('Tidak dapat mengakses kamera. Pastikan izin kamera sudah diberikan.')
 
             scanning = false
 
@@ -98,6 +100,7 @@
 
             if (data.success) {
 
+                toast.success(data.message || 'Presensi berhasil dicatat!')
                 scanResult = {
 
                     message: data.message,
@@ -107,6 +110,7 @@
 
             } else {
 
+                toast.error(data.message || 'Gagal mencatat presensi')
                 scanError = data.message
 
             }
@@ -114,6 +118,7 @@
         } catch (err) {
 
             scanError = 'Terjadi kesalahan jaringan.'
+            toast.error('Terjadi kesalahan jaringan.')
 
         }
 

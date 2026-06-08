@@ -1,5 +1,7 @@
 <script>
 
+    import { toast } from '../stores/toastStore.js'
+
     export let mahasiswa = []
 
     let name = ''
@@ -9,52 +11,94 @@
 
     async function tambahMahasiswa() {
 
-        await fetch('/admin/mahasiswa', {
+        if (!name || !nim || !email || !password) {
 
-            method: 'POST',
+            toast.warning('Semua field wajib diisi!')
+            return
 
-            headers: {
+        }
 
-                'Content-Type': 'application/json',
+        try {
 
-                'X-CSRF-TOKEN': document
-                    .querySelector('meta[name="csrf-token"]')
-                    .content,
+            const response = await fetch('/admin/mahasiswa', {
 
-            },
+                method: 'POST',
 
-            body: JSON.stringify({
+                headers: {
 
-                name,
-                nim,
-                email,
-                password,
+                    'Content-Type': 'application/json',
 
-            }),
+                    'X-CSRF-TOKEN': document
+                        .querySelector('meta[name="csrf-token"]')
+                        .content,
 
-        })
+                },
 
-        window.location.reload()
+                body: JSON.stringify({
+
+                    name,
+                    nim,
+                    email,
+                    password,
+
+                }),
+
+            })
+
+            if (response.ok) {
+
+                toast.success(`Mahasiswa ${name} berhasil ditambahkan! 🎓`)
+                setTimeout(() => window.location.reload(), 1200)
+
+            } else {
+
+                const data = await response.json()
+                toast.error(data.message || 'Gagal menambahkan mahasiswa')
+
+            }
+
+        } catch (error) {
+
+            toast.error('Terjadi kesalahan jaringan')
+
+        }
 
     }
 
     async function hapusMahasiswa(id) {
 
-        await fetch(`/mahasiswa/${id}`, {
+        try {
 
-            method: 'DELETE',
+            const response = await fetch(`/mahasiswa/${id}`, {
 
-            headers: {
+                method: 'DELETE',
 
-                'X-CSRF-TOKEN': document
-                    .querySelector('meta[name="csrf-token"]')
-                    .content,
+                headers: {
 
-            },
+                    'X-CSRF-TOKEN': document
+                        .querySelector('meta[name="csrf-token"]')
+                        .content,
 
-        })
+                },
 
-        window.location.reload()
+            })
+
+            if (response.ok) {
+
+                toast.success('Mahasiswa berhasil dihapus!')
+                setTimeout(() => window.location.reload(), 1200)
+
+            } else {
+
+                toast.error('Gagal menghapus mahasiswa')
+
+            }
+
+        } catch (error) {
+
+            toast.error('Terjadi kesalahan jaringan')
+
+        }
 
     }
 

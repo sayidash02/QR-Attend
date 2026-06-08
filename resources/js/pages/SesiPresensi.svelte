@@ -2,6 +2,7 @@
     import QRCode from 'qrcode'
     import { onMount, onDestroy } from 'svelte'
     import { router } from '@inertiajs/svelte'
+    import { toast } from '../stores/toastStore.js'
 
     export let user
     export let mataKuliahs = []
@@ -79,7 +80,7 @@
     // Buka sesi baru
     function bukaSesi() {
         if (!selectedMatkul) {
-            alert('Pilih mata kuliah terlebih dahulu!')
+            toast.warning('Pilih mata kuliah terlebih dahulu!')
             return
         }
 

@@ -4,6 +4,8 @@ import { createInertiaApp } from '@inertiajs/svelte'
 
 import { mount } from 'svelte'
 
+import Toast from './components/Toast.svelte'
+
 createInertiaApp({
 
     resolve: async (name) => {
@@ -23,6 +25,15 @@ createInertiaApp({
             props,
 
         })
+
+        // Mount Toast globally
+        const toastContainer = document.createElement('div')
+
+        toastContainer.id = 'toast-root'
+
+        document.body.appendChild(toastContainer)
+
+        mount(Toast, { target: toastContainer })
 
     },
 

@@ -1,42 +1,72 @@
 <script>
 
+    import { toast } from '../../stores/toastStore.js'
+
     let email = ''
     let password = ''
+    let loading = false
 
     async function login() {
 
-        const response = await fetch('/login', {
+        if (!email || !password) {
 
-            method: 'POST',
+            toast.warning('Email dan password harus diisi!')
+            return
 
-            headers: {
+        }
 
-                'Content-Type': 'application/json',
+        loading = true
 
-                'X-CSRF-TOKEN': document
-                    .querySelector('meta[name="csrf-token"]')
-                    .content,
+        try {
 
-            },
+            const response = await fetch('/login', {
 
-            body: JSON.stringify({
+                method: 'POST',
 
-                email,
-                password,
+                headers: {
 
-            }),
+                    'Content-Type': 'application/json',
 
-        })
+                    'X-CSRF-TOKEN': document
+                        .querySelector('meta[name="csrf-token"]')
+                        .content,
 
-        /*
-        |--------------------------------------------------------------------------
-        | REDIRECT BERDASARKAN ROLE
-        |--------------------------------------------------------------------------
-        */
+                },
 
-        if (response.redirected) {
+                body: JSON.stringify({
 
-            window.location.href = response.url
+                    email,
+                    password,
+
+                }),
+
+            })
+
+            /*
+            |--------------------------------------------------------------------------
+            | REDIRECT BERDASARKAN ROLE
+            |--------------------------------------------------------------------------
+            */
+
+            if (response.redirected) {
+
+                toast.success('Login berhasil! Mengarahkan...')
+                window.location.href = response.url
+
+            } else if (!response.ok) {
+
+                const data = await response.json().catch(() => null)
+                toast.error(data?.message || 'Email atau password salah!')
+
+            }
+
+        } catch (error) {
+
+            toast.error('Terjadi kesalahan jaringan. Coba lagi.')
+
+        } finally {
+
+            loading = false
 
         }
 

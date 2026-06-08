@@ -1,5 +1,7 @@
 <script>
 
+    import { toast } from '../stores/toastStore.js'
+
     export let dosen = []
 
     let name = ''
@@ -10,33 +12,58 @@
 
     async function tambahDosen() {
 
-        await fetch('/admin/dosen', {
+        if (!name || !email || !password) {
 
-            method: 'POST',
+            toast.warning('Nama, email, dan password wajib diisi!')
+            return
 
-            headers: {
+        }
 
-                'Content-Type': 'application/json',
+        try {
 
-                'X-CSRF-TOKEN': document
-                    .querySelector('meta[name="csrf-token"]')
-                    .content,
+            const response = await fetch('/admin/dosen', {
 
-            },
+                method: 'POST',
 
-            body: JSON.stringify({
+                headers: {
 
-                name,
-                nidn,
-                matkul,
-                email,
-                password,
+                    'Content-Type': 'application/json',
 
-            }),
+                    'X-CSRF-TOKEN': document
+                        .querySelector('meta[name="csrf-token"]')
+                        .content,
 
-        })
+                },
 
-        window.location.reload()
+                body: JSON.stringify({
+
+                    name,
+                    nidn,
+                    matkul,
+                    email,
+                    password,
+
+                }),
+
+            })
+
+            if (response.ok) {
+
+                toast.success(`Dosen ${name} berhasil ditambahkan! 🎓`)
+                setTimeout(() => window.location.reload(), 1200)
+
+            } else {
+
+                const data = await response.json()
+                toast.error(data.message || 'Gagal menambahkan dosen')
+
+            }
+
+        } catch (error) {
+
+            toast.error('Terjadi kesalahan jaringan')
+
+        }
 
     }
 
