@@ -21,6 +21,13 @@ class SesiPresensiController extends Controller
     public function index()
     {
         $user = Auth::user();
+
+        if ($user->role === 'mahasiswa') {
+            return Inertia::render('Admin/Dashboard', [
+                'user' => $user,
+            ]);
+        }
+
         $mataKuliahs = MataKuliah::where('dosen_id', $user->id)->get();
 
         // Auto-close expired sessions
