@@ -18,19 +18,7 @@ export default defineConfig({
 
         }),
 
-        svelte({
-
-            compilerOptions: {
-
-                compatibility: {
-
-                    componentApi: 4
-
-                }
-
-            }
-
-        }),
+        svelte(),
 
         tailwindcss(),
 

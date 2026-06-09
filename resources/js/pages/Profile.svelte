@@ -173,9 +173,8 @@
 
         </nav>
 
-        <!-- LOGOUT -->
         <button
-            on:click={logout}
+            onclick={logout}
             class="w-full bg-red-50 text-red-600 hover:bg-red-100 px-5 py-3 rounded-xl font-semibold transition border border-red-200"
         >
             🚪 Logout
@@ -360,7 +359,7 @@
 
                         <!-- BUTTON -->
                         <button
-                            on:click={updatePassword}
+                            onclick={updatePassword}
                             disabled={loading}
                             class="w-full bg-[#062B66] hover:bg-[#0a3d8f] disabled:bg-slate-400 text-white px-6 py-4 rounded-xl font-semibold transition mt-6"
                         >

@@ -23,5 +23,10 @@ class AppServiceProvider extends ServiceProvider
         ResetPassword::createUrlUsing(function (object $notifiable, string $token) {
             return config('app.frontend_url')."/password-reset/$token?email={$notifiable->getEmailForPasswordReset()}";
         });
+
+        // Paksa HTTPS jika diakses di luar localhost (misalnya lewat domain tunnel .lhr.life atau pinggy)
+        if (!in_array(request()->getHost(), ['127.0.0.1', 'localhost'])) {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
     }
 }

@@ -33,21 +33,27 @@ class AdminController extends Controller
 
     public function storeDosen(Request $request)
     {
-        User::create([
-
+        $dosen = User::create([
             'name' => $request->name,
-
             'nidn' => $request->nidn,
-
             'matkul' => $request->matkul,
-
             'email' => $request->email,
-
             'password' => bcrypt($request->password),
-
             'role' => 'dosen',
-
         ]);
+
+        if ($request->matkul) {
+            $subjects = explode(',', $request->matkul);
+            foreach ($subjects as $subject) {
+                $subjectName = trim($subject);
+                if (!empty($subjectName)) {
+                    \App\Models\MataKuliah::create([
+                        'nama_matkul' => $subjectName,
+                        'dosen_id' => $dosen->id,
+                    ]);
+                }
+            }
+        }
 
         return back();
     }
@@ -79,7 +85,12 @@ class AdminController extends Controller
 
     public function destroyDosen($id)
     {
-        User::findOrFail($id)->delete();
+        $dosen = User::findOrFail($id);
+        
+        // Delete related mata_kuliahs first
+        \App\Models\MataKuliah::where('dosen_id', $dosen->id)->delete();
+        
+        $dosen->delete();
 
         return back();
     }
@@ -89,15 +100,28 @@ class AdminController extends Controller
         $dosen = User::findOrFail($id);
 
         $dosen->update([
-
             'matkul' => $request->matkul,
-
         ]);
 
+        // Delete existing mata_kuliahs for this dosen
+        \App\Models\MataKuliah::where('dosen_id', $dosen->id)->delete();
+
+        // Create new ones
+        if ($request->matkul) {
+            $subjects = explode(',', $request->matkul);
+            foreach ($subjects as $subject) {
+                $subjectName = trim($subject);
+                if (!empty($subjectName)) {
+                    \App\Models\MataKuliah::create([
+                        'nama_matkul' => $subjectName,
+                        'dosen_id' => $dosen->id,
+                    ]);
+                }
+            }
+        }
+
         return response()->json([
-
             'message' => 'Matakuliah berhasil diupdate'
-
         ]);
     }
 }

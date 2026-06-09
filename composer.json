@@ -8,11 +8,11 @@
     "require": {
         "php": "^8.3",
         "inertiajs/inertia-laravel": "^3.1",
-        "laravel/framework": "^13.8",
+        "laravel/framework": "13.9.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^3.0",
         "laravel/ui": "^4.6",
-        "maatwebsite/excel": "^3.1"
+        "maatwebsite/excel": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
