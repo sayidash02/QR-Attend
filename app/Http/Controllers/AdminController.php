@@ -92,7 +92,20 @@ class AdminController extends Controller
         
         $dosen->delete();
 
-        return back();
+        return response()->json([
+            'message' => 'Dosen berhasil dihapus'
+        ]);
+    }
+
+    public function destroyMahasiswa($id)
+    {
+        $mahasiswa = User::findOrFail($id);
+        
+        $mahasiswa->delete();
+
+        return response()->json([
+            'message' => 'Mahasiswa berhasil dihapus'
+        ]);
     }
 
     public function updateMatkul(Request $request, $id)

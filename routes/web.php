@@ -253,4 +253,5 @@ Route::post('/absensi/scan', [SesiPresensiController::class, 'scan'])
 
     Route::delete('/admin/dosen/{id}', [AdminController::class, 'destroyDosen']);
     Route::put('/admin/dosen/{id}/matkul', [AdminController::class, 'updateMatkul']);
+    Route::delete('/admin/mahasiswa/{id}', [AdminController::class, 'destroyMahasiswa']);
     

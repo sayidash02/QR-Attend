@@ -48,7 +48,7 @@
     async function hapusMahasiswa(id, name) {
         if (!confirm(`Apakah Anda yakin ingin menghapus mahasiswa ${name}?`)) return
         try {
-            const response = await fetch(`/mahasiswa/${id}`, {
+            const response = await fetch(`/admin/mahasiswa/${id}`, {
                 method: 'DELETE',
                 headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content },
             })
