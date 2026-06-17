@@ -1,64 +1,72 @@
 <script>
-    export let matkuls = [];
+    export let riwayat = [];
+    export let matkul;
 </script>
 
 <div class="page-wrap">
 
-    <!-- HEADER -->
     <div class="animate-fade-in" style="margin-bottom:32px;">
 
         <a
-            href="/mahasiswa/dashboard"
+            href="/riwayat-absensi"
             class="qr-btn qr-btn-outline qr-btn-sm"
             style="margin-bottom:20px; display:inline-flex;"
         >
-            ← Kembali ke Dashboard
+            ← Kembali
         </a>
 
         <h1 class="qr-page-title">
-            Riwayat Absensi
+            {matkul.nama_matkul}
         </h1>
 
         <p class="qr-page-subtitle">
-            Pilih mata kuliah untuk melihat riwayat kehadiran.
+            Riwayat Kehadiran Mata Kuliah
         </p>
 
     </div>
 
-    <!-- CARD MATKUL -->
     <div class="grid">
 
-        {#if matkuls.length > 0}
+        {#if riwayat.length > 0}
 
-            {#each matkuls as matkul}
+            {#each riwayat as item, index}
 
-                <div class="qr-card matkul-card">
+                <div class="qr-card pertemuan-card">
 
                     <div>
 
-                        <div class="icon">
-                            📚
+                        <div class="badge-pertemuan">
+                            Pertemuan {index + 1}
                         </div>
 
                         <h2>
-                            {matkul.nama_matkul}
+                            Status Kehadiran
                         </h2>
 
                         <p>
-                            Total Pertemuan:
-                            <strong>
-                                {matkul.total_pertemuan}
-                            </strong>
+                            Waktu Scan:
+                            {new Date(item.waktu_scan)
+                                .toLocaleString('id-ID')}
                         </p>
 
                     </div>
 
-                    <a
-                        href={`/riwayat/${matkul.id}`}
-                        class="qr-btn"
-                    >
-                        Lihat Riwayat
-                    </a>
+                    <div>
+
+                        <span
+                            class="qr-badge
+                            {item.status === 'hadir'
+                                ? 'qr-badge-success'
+                                : item.status === 'telat'
+                                ? 'qr-badge-warning'
+                                : item.status === 'izin'
+                                ? 'qr-badge-info'
+                                : 'qr-badge-danger'}"
+                        >
+                            {item.status}
+                        </span>
+
+                    </div>
 
                 </div>
 
@@ -103,46 +111,47 @@
     gap: 20px;
 }
 
-.matkul-card {
+.pertemuan-card {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 28px;
+    padding: 24px;
     border-left: 5px solid #2563eb;
     transition: .2s;
 }
 
-.matkul-card:hover {
+.pertemuan-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 10px 25px rgba(0,0,0,.08);
 }
 
-.icon {
-    font-size: 40px;
+.badge-pertemuan {
+    display: inline-block;
+    background: #dbeafe;
+    color: #1d4ed8;
+    padding: 6px 12px;
+    border-radius: 9999px;
+    font-size: .85rem;
+    font-weight: 600;
     margin-bottom: 12px;
 }
 
-.matkul-card h2 {
-    font-size: 1.5rem;
+.pertemuan-card h2 {
+    font-size: 1.2rem;
     font-weight: 700;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
-.matkul-card p {
+.pertemuan-card p {
     color: var(--color-text-secondary);
 }
 
 @media(max-width:768px){
 
-    .matkul-card{
+    .pertemuan-card{
         flex-direction: column;
         align-items: flex-start;
         gap: 20px;
-    }
-
-    .matkul-card .qr-btn{
-        width: 100%;
-        text-align: center;
     }
 
 }

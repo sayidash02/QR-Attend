@@ -186,16 +186,42 @@ Route::post('/admin/mahasiswa', [AdminController::class, 'storeMahasiswa']);
 */
 
 // Rekap kehadiran untuk dosen/admin
+// Rekap dosen/admin
 Route::get('/rekap', [KehadiranController::class, 'index'])
     ->middleware('auth');
 
-// Riwayat absensi mahasiswa
-Route::get('/riwayat-absensi', [KehadiranController::class, 'riwayat'])
+
+// Detail sesi (harus di atas)
+Route::get('/rekap/sesi/{id}', [KehadiranController::class, 'detailSesi'])
     ->middleware('auth');
 
-// Download Riwayat Kehadiran
-Route::get('/kehadiran/export', [KehadiranController::class, 'export'])
+
+// Detail mata kuliah
+Route::get('/rekap/{id}', [KehadiranController::class, 'detail'])
     ->middleware('auth');
+
+
+Route::post('/kehadiran/update-status', [
+    KehadiranController::class,
+    'updateStatus'
+])->middleware('auth');
+
+// Riwayat absensi mahasiswa
+Route::get('/riwayat-absensi', [
+    KehadiranController::class,
+    'riwayat'
+])->middleware('auth');
+
+Route::get('/riwayat/{id}', [
+    KehadiranController::class,
+    'riwayatMatkul'
+])->middleware('auth');
+
+// Download Riwayat Kehadiran
+Route::get(
+    '/rekap/{id}/export',
+    [KehadiranController::class, 'exportRekap']
+)->middleware('auth');
 
 
 

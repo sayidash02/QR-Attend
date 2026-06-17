@@ -1,67 +1,69 @@
 <script>
-    export let kehadirans = [];
+    export let matkuls = [];
 </script>
 
 <div class="page-wrap">
 
-    <!-- HEADER -->
     <div class="animate-fade-in" style="margin-bottom: 32px;">
 
-        <a href="/dosen/dashboard" class="qr-btn qr-btn-outline qr-btn-sm" style="margin-bottom: 20px; display: inline-flex;">
+        <a href="/dosen/dashboard"
+           class="qr-btn qr-btn-outline qr-btn-sm"
+           style="margin-bottom: 20px; display: inline-flex;">
             ← Kembali ke Dashboard
         </a>
 
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 12px;">
-            <h1 class="qr-page-title">Rekap Kehadiran</h1>
-            <a href="/kehadiran/export" class="qr-btn qr-btn-sm" style="background: var(--color-success); color: white;">
-                📥 Download Excel
-            </a>
-        </div>
+        <h1 class="qr-page-title">
+            Rekap Kehadiran
+        </h1>
 
-        <p class="qr-page-subtitle">Data kehadiran seluruh mahasiswa.</p>
+        <p class="qr-page-subtitle">
+            Mata kuliah yang Anda ampu.
+        </p>
+
     </div>
 
-    <!-- TABLE -->
-    <div class="qr-card animate-slide-up" style="overflow: hidden;">
-        <div style="overflow-x: auto;">
-            <table class="qr-table">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Nama Mahasiswa</th>
-                        <th>Mata Kuliah</th>
-                        <th>Waktu Scan</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {#if kehadirans.length > 0}
-                        {#each kehadirans as item, index}
-                            <tr>
-                                <td>{index + 1}</td>
-                                <td style="font-weight: 600;">{item.user?.name}</td>
-                                <td>{item.mata_kuliah?.nama_matkul}</td>
-                                <td style="color: var(--color-text-secondary);">{item.waktu_scan}</td>
-                                <td>
-                                    <span class="qr-badge {item.status === 'hadir' ? 'qr-badge-success' : item.status === 'telat' ? 'qr-badge-warning' : item.status === 'izin' ? 'qr-badge-info' : 'qr-badge-danger'}">
-                                        {item.status}
-                                    </span>
-                                </td>
-                            </tr>
-                        {/each}
-                    {:else}
-                        <tr>
-                            <td colspan="5">
-                                <div class="qr-empty">
-                                    <div class="qr-empty-icon">📋</div>
-                                    <div class="qr-empty-text">Belum ada data kehadiran.</div>
-                                </div>
-                            </td>
-                        </tr>
-                    {/if}
-                </tbody>
-            </table>
-        </div>
+    <div class="matkul-grid">
+
+        {#if matkuls.length > 0}
+
+            {#each matkuls as matkul}
+
+                <div class="qr-card matkul-card">
+
+                    <div class="badge">
+                        Mata Kuliah
+                    </div>
+
+                    <h2>{matkul.nama_matkul}</h2>
+
+                    <p>
+                        Total Kehadiran:
+                        <strong>{matkul.kehadirans_count}</strong>
+                    </p>
+
+                    <a
+                        href={`/rekap/${matkul.id}`}
+                        class="qr-btn"
+                        style="width: 100%; margin-top: 20px;"
+                    >
+                        Lihat Rekap
+                    </a>
+
+                </div>
+
+            {/each}
+
+        {:else}
+
+            <div class="qr-empty">
+                <div class="qr-empty-icon">📚</div>
+                <div class="qr-empty-text">
+                    Belum ada mata kuliah.
+                </div>
+            </div>
+
+        {/if}
+
     </div>
 
 </div>
@@ -75,7 +77,28 @@
         margin: 0 auto;
     }
 
-    @media (min-width: 768px) {
-        .page-wrap { padding: 48px 40px; }
+    .matkul-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 24px;
+    }
+
+    .matkul-card {
+        padding: 24px;
+    }
+
+    .matkul-card h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 12px 0;
+    }
+
+    .badge {
+        display: inline-block;
+        background: #dbeafe;
+        color: #1d4ed8;
+        padding: 6px 12px;
+        border-radius: 9999px;
+        font-size: 0.875rem;
     }
 </style>
